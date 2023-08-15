@@ -426,4 +426,17 @@ fn main() {
         println!("\n{}: {:?}", i, &b.nodes[i]);
     }
     println!("\nroot: {:?}", b.root);
+
+    println!("--------------------- 顺序读取 Leaf");
+    let mut curr_leaf_idx = Some(b.first_leaf);
+    let mut leaf_count = 0;
+    while let Some(idx) = curr_leaf_idx {
+        let node = &b.nodes[idx];
+        println!("\n{}: {:?}", idx, &b.nodes[idx]);
+        if let BPTreeNode::Leaf { next, .. } = node {
+            curr_leaf_idx = next.clone()
+        }
+        leaf_count += 1;
+    }
+    println!("\nleaf count: {}", leaf_count);
 }
